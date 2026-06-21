@@ -3,238 +3,320 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Live Sports</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+<title>Sports Live</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Inter',sans-serif;
+:root{
+    --bg:#07080a;
+    --panel:#121317;
+    --panel-2:#1a1c21;
+    --accent:#ff2d4e;
+    --accent-2:#ffc400;
+    --text:#f5f6f8;
+    --text-dim:#8a8d95;
+    --line:rgba(255,255,255,.08);
 }
-
+*{margin:0;padding:0;box-sizing:border-box;}
 body{
-    background:#050505;
-    color:#fff;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
 }
 
+/* ---------- header ---------- */
 .header{
     position:fixed;
-    top:0;
-    left:0;
-    width:100%;
+    top:0;left:0;width:100%;
     z-index:100;
-    backdrop-filter:blur(20px);
-    background:rgba(10,10,10,.8);
-    border-bottom:1px solid rgba(255,255,255,.08);
+    background:rgba(7,8,10,.85);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--line);
 }
-
 .nav{
-    max-width:1400px;
+    max-width:1200px;
     margin:auto;
-    padding:18px 25px;
+    padding:16px 24px;
     display:flex;
     justify-content:space-between;
     align-items:center;
 }
-
 .logo{
-    font-size:24px;
-    font-weight:800;
-}
-
-.live-badge{
-    background:#ff1f4b;
-    color:#fff;
-    padding:8px 15px;
-    border-radius:50px;
-    font-size:13px;
+    font-family:'Oswald',sans-serif;
+    font-size:22px;
     font-weight:700;
-    animation:pulse 1.5s infinite;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
-
+.logo .bar{
+    width:6px;height:22px;
+    background:var(--accent);
+    clip-path:polygon(30% 0,100% 0,70% 100%,0 100%);
+}
+.air-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    padding:7px 16px 7px 12px;
+    clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);
+}
+.air-dot{
+    width:8px;height:8px;
+    border-radius:50%;
+    background:var(--accent);
+    animation:pulse 1.6s ease-in-out infinite;
+}
+.air-badge span{
+    font-family:'Oswald',sans-serif;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:1.5px;
+}
 @keyframes pulse{
-    0%{opacity:1}
-    50%{opacity:.5}
-    100%{opacity:1}
+    0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(255,45,78,.5);}
+    50%{opacity:.4;box-shadow:0 0 0 6px rgba(255,45,78,0);}
+}
+@media (prefers-reduced-motion:reduce){
+    .air-dot{animation:none;}
 }
 
+/* ---------- hero / player ---------- */
 .hero{
-    max-width:1400px;
+    max-width:1200px;
     margin:auto;
-    padding:100px 20px 30px;
+    padding:96px 20px 40px;
 }
-
 .match-card{
-    background:linear-gradient(
-    135deg,
-    rgba(255,255,255,.05),
-    rgba(255,255,255,.02)
-    );
-
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:24px;
+    background:var(--panel);
+    border:1px solid var(--line);
     overflow:hidden;
-    backdrop-filter:blur(25px);
 }
-
 .player-wrap{
     position:relative;
     width:100%;
     aspect-ratio:16/9;
     background:#000;
 }
-
 .player-wrap iframe{
-    width:100%;
-    height:100%;
-    border:none;
+    width:100%;height:100%;border:none;display:block;
 }
-
 .overlay{
     position:absolute;
-    top:20px;
-    left:20px;
+    top:18px;left:18px;
     display:flex;
-    gap:10px;
+    gap:8px;
+    z-index:2;
 }
-
 .tag{
-    padding:8px 14px;
-    border-radius:999px;
-    font-size:13px;
+    font-family:'Oswald',sans-serif;
+    font-size:12px;
     font-weight:600;
-    background:rgba(0,0,0,.6);
-    backdrop-filter:blur(20px);
+    letter-spacing:1px;
+    padding:8px 16px 8px 12px;
+    background:rgba(8,9,11,.75);
+    backdrop-filter:blur(10px);
+    clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);
+}
+.tag.live{
+    background:var(--accent);
 }
 
-.live{
-    background:#ff214f;
+/* broadcast-style scoreboard strip */
+.scoreboard{
+    display:flex;
+    align-items:stretch;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    background:var(--panel-2);
+}
+.scoreboard .cell{
+    padding:14px 22px;
+    position:relative;
+}
+.scoreboard .cell + .cell{
+    border-left:1px solid var(--line);
+}
+.scoreboard .cell::after{
+    content:"";
+    position:absolute;
+    right:-1px;top:0;bottom:0;
+    width:1px;
+}
+.eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:1.5px;
+    color:var(--text-dim);
+    text-transform:uppercase;
+    margin-bottom:4px;
+}
+.league-name{
+    font-family:'Oswald',sans-serif;
+    font-size:15px;
+    font-weight:600;
+    letter-spacing:.4px;
+}
+.status-val{
+    font-family:'JetBrains Mono',monospace;
+    font-size:15px;
+    font-weight:600;
+    color:var(--accent-2);
 }
 
 .content{
-    padding:28px;
+    padding:28px 28px 32px;
 }
-
-.league{
-    color:#aaa;
-    margin-bottom:10px;
-}
-
 .title{
-    font-size:32px;
-    font-weight:800;
+    font-family:'Oswald',sans-serif;
+    font-size:34px;
+    font-weight:700;
+    letter-spacing:.3px;
+    line-height:1.15;
+    text-transform:uppercase;
 }
 
+/* ---------- stats ---------- */
 .stats{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:15px;
-    margin-top:25px;
+    gap:1px;
+    margin-top:26px;
+    background:var(--line);
+    border:1px solid var(--line);
 }
-
 .stat{
-    background:#101010;
-    border:1px solid rgba(255,255,255,.05);
-    padding:20px;
-    border-radius:18px;
+    background:var(--panel-2);
+    padding:18px 20px;
+    border-left:3px solid var(--accent);
 }
-
+.stat:nth-child(2){border-left-color:var(--accent-2);}
+.stat:nth-child(3){border-left-color:var(--text-dim);}
 .stat small{
-    color:#888;
+    display:block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    color:var(--text-dim);
 }
-
 .stat h3{
     margin-top:8px;
-    font-size:20px;
+    font-family:'Oswald',sans-serif;
+    font-size:18px;
+    font-weight:600;
+}
+
+/* ---------- ticker ---------- */
+.ticker{
+    margin-top:40px;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    background:var(--panel);
+    overflow:hidden;
+    white-space:nowrap;
+    padding:12px 0;
+}
+.ticker-track{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:1px;
+    color:var(--text-dim);
+    animation:scroll 22s linear infinite;
+}
+.ticker-track span{
+    color:var(--accent-2);
+    margin:0 8px;
+}
+@keyframes scroll{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+}
+@media (prefers-reduced-motion:reduce){
+    .ticker-track{animation:none;}
 }
 
 @media(max-width:768px){
-
-.title{
-    font-size:24px;
-}
-
-.stats{
-    grid-template-columns:1fr;
-}
-
+    .title{font-size:24px;}
+    .stats{grid-template-columns:1fr;}
+    .scoreboard{flex-direction:column;}
+    .scoreboard .cell + .cell{border-left:none;border-top:1px solid var(--line);}
 }
 </style>
 </head>
-
 <body>
-
 <header class="header">
     <div class="nav">
-        <div class="logo">SPORTS LIVE</div>
-        <div class="live-badge">● LIVE</div>
+        <div class="logo"><span class="bar"></span>SPORTS LIVE</div>
+        <div class="air-badge"><span class="air-dot"></span><span>ON AIR</span></div>
     </div>
 </header>
 
 <section class="hero">
-
 <div class="match-card">
 
-<div class="player-wrap">
+    <div class="player-wrap">
+        <div class="overlay">
+            <div class="tag live">LIVE</div>
+            <div class="tag" id="league"></div>
+        </div>
+        <iframe id="player" allowfullscreen allow="encrypted-media; picture-in-picture"></iframe>
+    </div>
 
-<div class="overlay">
-<div class="tag live">LIVE</div>
-<div class="tag" id="league"></div>
-</div>
+    <div class="scoreboard">
+        <div class="cell">
+            <div class="eyebrow">Competition</div>
+            <div class="league-name" id="leagueText"></div>
+        </div>
+        <div class="cell">
+            <div class="eyebrow">Match status</div>
+            <div class="status-val" id="status"></div>
+        </div>
+    </div>
 
-<iframe
-id="player"
-allowfullscreen
-allow="encrypted-media; picture-in-picture">
-</iframe>
+    <div class="content">
+        <h1 class="title" id="title"></h1>
 
-</div>
-
-<div class="content">
-
-<div class="league" id="leagueText"></div>
-
-<h1 class="title" id="title"></h1>
-
-<div class="stats">
-
-<div class="stat">
-<small>Status</small>
-<h3 id="status"></h3>
-</div>
-
-<div class="stat">
-<small>Quality</small>
-<h3>HD Stream</h3>
-</div>
-
-<div class="stat">
-<small>Platform</small>
-<h3>Vercel</h3>
-</div>
-
-</div>
+        <div class="stats">
+            <div class="stat">
+                <small>Status</small>
+                <h3 id="statusCard"></h3>
+            </div>
+            <div class="stat">
+                <small>Quality</small>
+                <h3>HD Stream</h3>
+            </div>
+            <div class="stat">
+                <small>Platform</small>
+                <h3>Vercel</h3>
+            </div>
+        </div>
+    </div>
 
 </div>
-
-</div>
-
 </section>
 
+<div class="ticker">
+    <div class="ticker-track">
+        SPORTS LIVE <span>//</span> HD COVERAGE, NO DELAY <span>//</span> REFRESH IF THE STREAM STALLS <span>//</span> SPORTS LIVE <span>//</span> HD COVERAGE, NO DELAY <span>//</span> REFRESH IF THE STREAM STALLS <span>//</span>
+    </div>
+</div>
+
 <script type="module">
-
 import { STREAM } from './stream.js';
-
 document.getElementById("player").src = STREAM.embedUrl;
 document.getElementById("title").innerText = STREAM.title;
 document.getElementById("status").innerText = STREAM.status;
+document.getElementById("statusCard").innerText = STREAM.status;
 document.getElementById("league").innerText = STREAM.league;
 document.getElementById("leagueText").innerText = STREAM.league;
-
 </script>
-
 </body>
 </html>
