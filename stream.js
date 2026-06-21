@@ -1,6 +1,6 @@
 export const STREAM = {
-  title: "Germany vs Curaçao",
+  title: "tunisia-vs-japan",
   league: "FIFA World Cup 2026",
   status: "LIVE",
-  embedUrl: "https://embed.st/embed/admin/ppv-germany-vs-cura-ao/1"
+  embedUrl: "https://embed.st/embed/admin/ppv-tunisia-vs-japan/1"
 };
